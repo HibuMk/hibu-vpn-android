@@ -33,8 +33,10 @@ jobs:
       - name: 安装 Android SDK
         uses: android-actions/setup-android@v4
 
-      - name: 构建
-        run: ./gradlew assembleUiOvpn23Release
+      - name: 构建（两个引擎各出一个包）
+        run: |
+          ./gradlew assembleUiOvpn23Release
+          ./gradlew assembleUiOvpn2Release
 
       - name: 列出产物（便于排查命名）
         run: |
