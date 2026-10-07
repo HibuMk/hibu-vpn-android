@@ -49,6 +49,9 @@ public class ICSOpenVPNApplication extends Application {
         createFirstLaunchSetting();
 
         AppRestrictions.getInstance(this).checkRestrictions(this);
+
+        // 黑龙江工商学院：首次启动导入内置线路（用户只需输入账号密码）
+        BuiltinProfile.ensureImported(this);
     }
 
     private void createFirstLaunchSetting() {
