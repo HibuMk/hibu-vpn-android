@@ -47,6 +47,13 @@
          PC 风格组件（与桌面客户端逐像素对齐）
          ═══════════════════════════════════════════════ -->
 
+    <!-- ⚠️ 基样式，必须存在！
+         Android 中带点的样式名会隐式继承：pc.card / pc.input / pc.infoKey …
+         都会自动继承名为 pc 的样式，若未定义则报
+         "error: resource style/pc not found"。
+         parent="" 表示不继承任何父样式。 -->
+    <style name="pc" parent="" />
+
     <!-- 卡片：白底 + 1dp 边框 + 10dp 圆角（PC 的 radius 8-9px） -->
     <style name="pc.card">
         <item name="android:background">@drawable/pc_card</item>
