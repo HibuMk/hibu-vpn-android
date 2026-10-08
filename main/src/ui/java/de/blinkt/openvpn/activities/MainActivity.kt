@@ -8,6 +8,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.viewpager2.widget.ViewPager2
@@ -28,6 +29,9 @@ class MainActivity : BaseActivity() {
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = view.findViewById(R.id.pager)
+
+        // 黑龙江工商学院：主界面隐藏顶部导航栏（只保留主连接页，与桌面版一致）
+        view.findViewById<View>(R.id.tab_layout)?.visibility = View.GONE
 
         mPagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager, lifecycle, this)
 

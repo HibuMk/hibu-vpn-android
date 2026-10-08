@@ -14,11 +14,25 @@
             android:orientation="vertical">
 
 
-        <!-- 黑龙江工商学院：按需求取消顶部导航栏，只保留主连接页（与桌面版一致） -->
+        <!-- ⚠️ 本布局被 MainActivity 与 VPNPreferences 共用：
+             VPNPreferences（线路设置分页）依赖 tab_layout，不能删除。
+             黑龙江工商学院：主界面在代码里把它隐藏（View.GONE），
+             用户看到的就是"单页 + 无导航栏"，与桌面版一致。 -->
+        <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                style="@style/blinkt.tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:visibility="gone"
+                app:tabMaxWidth="0dp"
+                app:tabMode="scrollable" />
+
         <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="0dp"
+                android:layout_weight="3" />
 
     </LinearLayout>
 

@@ -113,6 +113,8 @@ class VPNPreferences : BaseActivity(), VpnStatus.ProfileNotifyListener {
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = rootview.findViewById(R.id.pager)
         val tablayout: TabLayout = rootview.findViewById(R.id.tab_layout)
+        // 本页（线路设置分页）需要导航栏；main_activity.xml 里默认 gone 供主界面用
+        tablayout.visibility = android.view.View.VISIBLE
         mPagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager, lifecycle, this)
 
 
