@@ -11,12 +11,32 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: 构建 UiOvpn23 Release APK
+    name: 构建 APK（经典引擎 + 新版引擎）
     steps:
-      - name: 启用 debug 签名（无需密钥即可出可安装包）
+      - name: 配置固定发布签名（保证 OTA 可覆盖升级）
+        env:
+          KEYSTORE_B64: ${{ secrets.HIBU_KEYSTORE_B64 }}
+          KS_PASS: ${{ secrets.HIBU_KEYSTORE_PASS }}
         run: |
           mkdir -p ~/.gradle
-          echo -e "icsopenvpnDebugSign=true\norg.gradle.jvmargs=-Xmx2048M" > ~/.gradle/gradle.properties
+          if [ -z "$KEYSTORE_B64" ]; then
+            echo "::error::缺少 secrets.HIBU_KEYSTORE_B64 —— 不能用 debug 签名，否则 OTA 升级会因签名冲突失败"
+            exit 1
+          fi
+          echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/hibu-release.jks"
+          {
+            echo "org.gradle.jvmargs=-Xmx3072M"
+            echo "keystoreFile=$RUNNER_TEMP/hibu-release.jks"
+            echo "keystorePassword=$KS_PASS"
+            echo "keystoreAlias=hibu-vpn"
+            echo "keystoreAliasPassword=$KS_PASS"
+            echo "keystoreO2File=$RUNNER_TEMP/hibu-release.jks"
+            echo "keystoreO2Password=$KS_PASS"
+            echo "keystoreO2Alias=hibu-vpn"
+            echo "keystoreO2AliasPassword=$KS_PASS"
+          } > ~/.gradle/gradle.properties
+          echo "✅ 已写入签名配置（两个 flavor 用同一把密钥 → 可互相覆盖升级）"
+          echo "keystore 字节数: $(stat -c%s "$RUNNER_TEMP/hibu-release.jks")"
 
       - name: 检出代码（含 cpp 子模块）
         uses: actions/checkout@v7
@@ -38,10 +58,18 @@ jobs:
           ./gradlew assembleUiOvpn23Release
           ./gradlew assembleUiOvpn2Release
 
-      - name: 列出产物（便于排查命名）
+      - name: 列出产物 + 打印签名指纹（便于核对 OTA 兼容性）
         run: |
           echo "── APK 文件 ──"
           find main/build/outputs/apk -name "*.apk" -exec ls -la {} \; 2>/dev/null || echo "（未找到 apk）"
+          echo ""
+          echo "── 签名指纹（正常应全部相同）──"
+          for f in $(find main/build/outputs/apk -name "*.apk"); do
+            FP=$(unzip -p "$f" META-INF/CERT.RSA 2>/dev/null | openssl pkcs7 -inform DER -print_certs -noout 2>/dev/null | openssl x509 -noout -fingerprint -sha256 2>/dev/null | sed 's/.*=//')
+            echo "  $(basename $f): ${FP:-读取失败}"
+          done
+          CN=$(unzip -p "$(find main/build/outputs/apk -name '*ovpn2*release.apk' | head -1)" META-INF/CERT.RSA 2>/dev/null | openssl pkcs7 -inform DER -print_certs -noout 2>/dev/null | grep subject | head -1)
+          echo "  证书主体: $CN"
 
       - name: 上传 APK（找不到就报错，不静默通过）
         uses: actions/upload-artifact@v4
