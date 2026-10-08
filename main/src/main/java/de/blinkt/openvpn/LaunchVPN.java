@@ -93,6 +93,8 @@ public class LaunchVPN extends Activity {
     private boolean mhideLog = false;
 
     private boolean mCmfixed = false;
+    /** 临时密码是否已写入服务进程缓存（防止 onServiceConnected 回调导致循环绑定） */
+    private boolean mTransientPwCached = false;
     private String mTransientAuthPW;
     private String mTransientCertOrPKCS12PW;
     private String mSelectedProfileReason;
@@ -263,6 +265,20 @@ public class LaunchVPN extends Activity {
         if (requestCode == START_VPN_PROFILE) {
             if (resultCode == Activity.RESULT_OK) {
                 int needpw = mSelectedProfile.needUserPWInput(mTransientCertOrPKCS12PW, mTransientAuthPW);
+
+                // ★ 黑龙江工商学院：把主连接页传来的临时密码写进服务进程的凭据缓存。
+                //   上游只有 askForPW()（弹框输密码）分支会 bindService 做缓存；
+                //   走「不需要弹框」分支时，临时密码会被丢弃 → 引擎拿不到密码
+                //   → 服务端日志 authentication failed（用户名正确、密码为空）。
+                //   这里先绑定 OpenVPNStatusService 缓存一次；mTransientPwCached
+                //   防重入，因为 onServiceConnected 会再次回调 onActivityResult。
+                if (needpw == 0 && mTransientAuthPW != null && !mTransientPwCached) {
+                    mTransientPwCached = true;
+                    bindService(new Intent(this, OpenVPNStatusService.class), mConnection,
+                            Context.BIND_AUTO_CREATE);
+                    return;
+                }
+
                 if (needpw != 0) {
                     VpnStatus.updateStateString("USER_VPN_PASSWORD", "", R.string.state_user_vpn_password,
                             ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);
