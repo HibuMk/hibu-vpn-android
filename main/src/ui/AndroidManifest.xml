@@ -171,5 +171,15 @@
                 android:exported="true"
                 android:grantUriPermissions="true"
                 tools:ignore="ExportedContentProvider" />
+        <!-- OTA 升级：把下载好的 APK 以 content:// 交给系统安装器 -->
+        <provider
+                android:name="androidx.core.content.FileProvider"
+                android:authorities="${applicationId}.hibuupdate"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/hibu_update_paths" />
+        </provider>
     </application>
 </manifest>

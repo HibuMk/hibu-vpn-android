@@ -552,6 +552,16 @@
     <string name="pc_log_title">Log</string>
     <string name="pc_brand_title">Heilongjiang University of Business and Technology</string>
     <string name="pc_brand_sub">VPN Client</string>
+    <string name="pc_update_title">Update</string>
+    <string name="pc_update_check">Check for update</string>
+    <string name="pc_update_latest">You are on the latest version.</string>
+    <string name="pc_update_found">A new version is available!</string>
+    <string name="pc_update_changelog">What's new:</string>
+    <string name="pc_update_now">Update now</string>
+    <string name="pc_update_later">Later</string>
+    <string name="pc_update_downloading">Downloading update</string>
+    <string name="pc_update_fail">Update check failed. Please check your network.</string>
+    <string name="pc_update_perm">Please allow "Install unknown apps" and try again.</string>
     <string name="pc_brand_line">HUBT VPN Client</string>
     <string name="pc_about_body">HUBT VPN Client\n\nSecure access to campus resources. Available for Windows / macOS / Linux / Android / HarmonyOS.\n\nThis app is based on the open-source project ics-openvpn (GPLv2) and its source code is available at:\nhttps://github.com/HibuMk/hibu-vpn-android\n\nTechnical support: Information Center, HUBT</string>
 </resources>

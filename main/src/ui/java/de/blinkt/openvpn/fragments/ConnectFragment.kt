@@ -45,6 +45,7 @@ import de.blinkt.openvpn.core.IOpenVPNServiceInternal
 import de.blinkt.openvpn.core.OpenVPNService
 import de.blinkt.openvpn.core.ProfileManager
 import de.blinkt.openvpn.core.VpnStatus
+import de.blinkt.openvpn.updater.UpdateManager
 import java.util.Locale
 
 class ConnectFragment : Fragment(), VpnStatus.StateListener, VpnStatus.ByteCountListener {
@@ -67,6 +68,12 @@ class ConnectFragment : Fragment(), VpnStatus.StateListener, VpnStatus.ByteCount
     private lateinit var infoTraffic: TextView
 
     private var mLevel: ConnectionStatus = ConnectionStatus.LEVEL_NOTCONNECTED
+
+    /** 视图是否已就绪（onCreateView 结束置 true，防止状态回调早于 findViewById） */
+    private var viewsReady = false
+
+    /** 账号登录区当前锁定态（null=未设置过），避免重复刷 UI */
+    private var formLocked: Boolean? = null
     private var mConnectedAt: Long = 0L
     private var mTickRunning = false
 
@@ -119,7 +126,33 @@ class ConnectFragment : Fragment(), VpnStatus.StateListener, VpnStatus.ByteCount
         root.post { autoFitToScreen(root) }
         root.viewTreeObserver.addOnGlobalLayoutListener { autoFitToScreen(root) }
 
+        viewsReady = true
+        // 初始锁态（若进入本页时 VPN 已在连接/已连接）
+        setFormLocked(
+            mLevel == ConnectionStatus.LEVEL_CONNECTED ||
+            mLevel == ConnectionStatus.LEVEL_START ||
+            mLevel == ConnectionStatus.LEVEL_CONNECTING_SERVER_REPLY_YET ||
+            mLevel == ConnectionStatus.LEVEL_CONNECTING_SERVER_REPLIED
+        )
+
+        // ★ OTA：启动时静默检查一次（有新版本才弹窗，6 小时内不重复请求）
+        (activity as? android.app.Activity)?.let { UpdateManager.checkOnLaunch(it) }
+
         return v
+    }
+
+    /**
+     * 锁定 / 解锁「账号登录」区
+     * 连接中与已连接时：控件置灰、不可编辑、不可点选（防止连接期间改账号导致状态错乱）
+     */
+    private fun setFormLocked(locked: Boolean) {
+        if (!viewsReady || formLocked == locked) return
+        formLocked = locked
+        val alpha = if (locked) 0.45f else 1f
+        for (v in arrayOf<View>(nodeSpinner, userInput, passInput, rememberUser, autoConnect)) {
+            v.isEnabled = !locked
+            v.alpha = alpha
+        }
     }
 
     /**
@@ -279,6 +312,9 @@ class ConnectFragment : Fragment(), VpnStatus.StateListener, VpnStatus.ByteCount
             .setTitle(R.string.pc_about_title)
             .setMessage(body.toString())
             .setPositiveButton(R.string.pc_about_log) { _, _ -> showLog() }
+            .setNeutralButton(R.string.pc_update_check) { _, _ ->
+                (activity as? android.app.Activity)?.let { UpdateManager.checkManually(it) }
+            }
             .setNegativeButton(R.string.pc_about_close, null)
             .show()
     }
@@ -416,6 +452,10 @@ class ConnectFragment : Fragment(), VpnStatus.StateListener, VpnStatus.ByteCount
             else -> getString(R.string.pc_btn_connect)
         }
         actionBtn.isEnabled = !waiting
+
+        // ★ 拨号成功（含连接中）后锁定账号登录框：灰色、不可修改录入
+        setFormLocked(connected || waiting)
+
         if (connected) {
             actionBtn.setBackgroundResource(R.drawable.pc_button_disc)
             actionBtn.setTextColor(requireContext().getColor(R.color.err))

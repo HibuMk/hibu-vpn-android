@@ -36,6 +36,16 @@
     <string name="pc_log_title">运行日志</string>
     <string name="pc_brand_title">黑龙江工商学院</string>
     <string name="pc_brand_sub">虚拟专用网客户端</string>
+    <string name="pc_update_title">软件更新</string>
+    <string name="pc_update_check">检查更新</string>
+    <string name="pc_update_latest">当前已是最新版本。</string>
+    <string name="pc_update_found">发现新版本！</string>
+    <string name="pc_update_changelog">更新内容：</string>
+    <string name="pc_update_now">立即更新</string>
+    <string name="pc_update_later">稍后</string>
+    <string name="pc_update_downloading">正在下载更新包</string>
+    <string name="pc_update_fail">检查更新失败，请检查网络后重试。</string>
+    <string name="pc_update_perm">请先允许「安装未知应用」权限，再试一次。</string>
     <string name="pc_brand_line">黑工商虚拟专用网客户端</string>
     <string name="pc_about_body">黑龙江工商学院 VPN 客户端\n\n访问校内资源的安全通道，支持 Windows / macOS / Linux / Android / 鸿蒙。\n\n本应用基于开源项目 ics-openvpn（GPLv2）二次开发，按 GPLv2 要求开放源代码：\nhttps://github.com/HibuMk/hibu-vpn-android\n\n技术支持：黑龙江工商学院信息中心（网信办）</string>
 </resources>

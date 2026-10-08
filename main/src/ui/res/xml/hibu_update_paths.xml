@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- OTA 升级包存放路径（供 androidx FileProvider 生成 content:// 交给系统安装器） -->
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-files-path name="updates_ext" path="updates/" />
+    <files-path name="updates_files" path="updates/" />
+    <cache-path name="updates_cache" path="updates/" />
+</paths>
