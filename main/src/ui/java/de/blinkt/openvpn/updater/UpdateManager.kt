@@ -81,7 +81,7 @@ object UpdateManager {
             when {
                 rel == null -> toast(act, act.getString(R.string.pc_update_fail))
                 rel.versionCode <= currentVersionCode(act) ->
-                    new AlertDialog.Builder(act)
+                    AlertDialog.Builder(act)
                         .setTitle(R.string.pc_update_title)
                         .setMessage(
                             act.getString(R.string.pc_update_latest) + "\n\n" +

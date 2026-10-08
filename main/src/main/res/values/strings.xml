@@ -556,7 +556,7 @@
     <string name="pc_update_check">Check for update</string>
     <string name="pc_update_latest">You are on the latest version.</string>
     <string name="pc_update_found">A new version is available!</string>
-    <string name="pc_update_changelog">What's new:</string>
+    <string name="pc_update_changelog">What\'s new:</string>
     <string name="pc_update_now">Update now</string>
     <string name="pc_update_later">Later</string>
     <string name="pc_update_downloading">Downloading update</string>
