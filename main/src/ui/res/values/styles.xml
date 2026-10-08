@@ -18,8 +18,9 @@
         <item name="alertDialogTheme">@style/blinkt.alertDialog</item>
 
         <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:statusBarColor">@color/primary_dark</item>
-        <item name="android:windowLightStatusBar">false</item>
+        <!-- 取消顶部标题栏后，状态栏与页面同色，并用深色图标 -->
+        <item name="android:statusBarColor">@color/bg</item>
+        <item name="android:windowLightStatusBar">true</item>
 
         <!-- 页面底色（与 PC 一致 #f1f5f9） -->
         <item name="android:windowBackground">@color/bg</item>

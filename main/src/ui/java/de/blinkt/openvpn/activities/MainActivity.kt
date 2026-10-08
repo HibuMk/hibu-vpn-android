@@ -38,6 +38,10 @@ class MainActivity : BaseActivity() {
         /* Toolbar and slider should have the same elevation */
         disableToolbarElevation()
 
+        // 黑龙江工商学院：取消整条顶部标题栏（含右侧菜单图标），
+        // 只留连接页，与桌面版一致。其他页面（如线路设置）不受影响。
+        supportActionBar?.hide()
+
         // 黑龙江工商学院：按需求取消顶部导航栏（配置/图表/设置/常见问题/关于），
         // 只保留主连接页 —— 与桌面版保持一致。日志开关、软件信息移到页脚「关于」。
         mPagerAdapter.addTab(R.string.pc_tab_connect, ConnectFragment::class.java)
