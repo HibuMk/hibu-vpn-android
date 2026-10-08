@@ -538,8 +538,8 @@
     <string name="pc_info_duration">连接时长</string>
     <string name="pc_info_traffic">流量</string>
     <string name="pc_footer">黑龙江工商学院信息中心（网信办）</string>
-    <string name="pc_about_link">关于</string>
-    <string name="pc_about_title">关于</string>
+    <string name="pc_about_link">软件信息</string>
+    <string name="pc_about_title">软件信息</string>
     <string name="pc_about_version">版本</string>
     <string name="pc_about_log">查看日志</string>
     <string name="pc_about_close">关闭</string>
