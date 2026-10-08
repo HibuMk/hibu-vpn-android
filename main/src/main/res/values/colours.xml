@@ -35,7 +35,7 @@
 
     <!-- ═══ 组件专用 ═══ -->
     <color name="tab_text">#D9E8F3</color>       <!-- 未选中页签文字 -->
-    <color name="switchbar">@android:color/darker_gray</color>
+    <color name="switchbar">@color/brand</color>
     <color name="background_tab_pressed">#1AFFFFFF</color>
     <color name="logobackground">#F2F2F2</color>
 

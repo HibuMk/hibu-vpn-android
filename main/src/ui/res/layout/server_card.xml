@@ -15,7 +15,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            card_view:cardCornerRadius="10dp">
+            card_view:cardBackgroundColor="@color/card"
+            card_view:cardElevation="0dp"
+            card_view:cardCornerRadius="10dp"
+            card_view:strokeColor="@color/line"
+            card_view:strokeWidth="1dp">
 
 
         <RelativeLayout
