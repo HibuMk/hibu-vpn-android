@@ -1,7 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 黑龙江工商学院 VPN 客户端：深蓝底 + 校徽（学校色系） -->
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
-    <background android:drawable="@color/logobackground" />
-    <foreground android:drawable="@drawable/ic_logo_bunt" />
+    <background android:drawable="@drawable/ic_launcher_bg" />
+    <foreground android:drawable="@drawable/ic_launcher_fg" />
 
-<!--  Android 13 (API level 33) allows monochrome logos -->
+    <!-- Android 13 (API level 33) 单色图标 -->
     <monochrome android:drawable="@drawable/ic_logo_sw"/>
 </adaptive-icon>

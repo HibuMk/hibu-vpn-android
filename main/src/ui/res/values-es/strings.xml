@@ -4,7 +4,7 @@
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
 <resources>
-    <string name="app">黑龙江工商学院VPN客户端</string>
+    <string name="app">HUBT VPN</string>
     <string name="address">Dirección del servidor:</string>
     <string name="port">Puerto del servidor:</string>
     <string name="location">Ubicación</string>

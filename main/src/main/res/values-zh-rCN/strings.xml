@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pc_tab_connect">连接</string>
+    <string name="pc_status_off">未连接</string>
+    <string name="pc_status_on">已连接</string>
+    <string name="pc_status_wait">连接中</string>
+    <string name="pc_status_err">连接失败</string>
+    <string name="pc_status_hint">点击下方按钮连接</string>
+    <string name="pc_section_account">账号登录</string>
+    <string name="pc_section_info">连接信息</string>
+    <string name="pc_field_node">节点</string>
+    <string name="pc_field_user">账号</string>
+    <string name="pc_field_pass">密码</string>
+    <string name="pc_hint_user">工号 / 学号</string>
+    <string name="pc_hint_pass">VPN 专用密码</string>
+    <string name="pc_remember_user">记住账号</string>
+    <string name="pc_auto_connect">开机自动连接</string>
+    <string name="pc_btn_connect">连 接</string>
+    <string name="pc_btn_disconnect">断开连接</string>
+    <string name="pc_btn_connecting">连接中…</string>
+    <string name="pc_info_state">状态</string>
+    <string name="pc_info_node">节点</string>
+    <string name="pc_info_duration">连接时长</string>
+    <string name="pc_info_traffic">流量</string>
+    <string name="pc_footer">黑龙江工商学院信息中心（网信办）</string>
+    <string name="pc_err_user">请输入账号</string>
+    <string name="pc_err_pass">请输入密码</string>
+    <string name="pc_no_profile">未找到内置线路，请重新安装应用</string>
+    <string name="pc_node_default">公网主线路</string>
+    <string name="pc_start_reason">从主连接页发起连接</string>
+    <string name="pc_about_link">软件信息</string>
+    <string name="pc_about_title">软件信息</string>
+    <string name="pc_about_version">版本</string>
+    <string name="pc_about_log">查看日志</string>
+    <string name="pc_about_close">关闭</string>
+    <string name="pc_log_title">运行日志</string>
+    <string name="pc_brand_title">黑龙江工商学院</string>
+    <string name="pc_brand_sub">虚拟专用网客户端</string>
+    <string name="pc_about_body">黑龙江工商学院 VPN 客户端\n\n访问校内资源的安全通道，支持 Windows / macOS / Linux / Android / 鸿蒙。\n\n本应用基于开源项目 ics-openvpn（GPLv2）二次开发，按 GPLv2 要求开放源代码：\nhttps://github.com/HibuMk/hibu-vpn-android\n\n技术支持：黑龙江工商学院信息中心（网信办）</string>
+</resources>
