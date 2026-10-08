@@ -17,6 +17,13 @@
             tools:ignore="QueryAllPackagesPermission" />
 
 
+    <!-- 黑龙江工商学院：崩溃详情页（系统主题，最抗崩） -->
+    <activity
+        android:name="de.blinkt.openvpn.activities.CrashReportActivity"
+        android:exported="false"
+        android:theme="@android:style/Theme.DeviceDefault.Light"
+        android:label="崩溃信息" />
+
     <application
         android:name=".core.ICSOpenVPNApplication"
         android:allowBackup="true"

@@ -50,6 +50,9 @@ public class ICSOpenVPNApplication extends Application {
 
         AppRestrictions.getInstance(this).checkRestrictions(this);
 
+        // 黑龙江工商学院：崩溃诊断（崩了会把原因显示出来，便于快速定位）
+        HibuCrashHandler.install(this);
+
         // 黑龙江工商学院：首次启动导入内置线路（用户只需输入账号密码）
         BuiltinProfile.ensureImported(this);
     }
