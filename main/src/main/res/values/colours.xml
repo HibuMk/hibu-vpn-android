@@ -1,25 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2012-2016 Arne Schwabe
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
 
+<!--
+   黑龙江工商学院 VPN 客户端 —— 品牌配色
+   设计令牌与 PC 客户端（src/styles.css）保持完全一致，确保两端视觉统一。
+-->
 <resources>
-    <!-- Indigo -->
-    <!-- OpenVPN colours #203155, #C66D0D -->
-    <color name="primary">#3F51B5</color>      <!--500-->
-    <color name="primary_dark">#303F9F</color> <!--700-->
-    <color name="accent">#FFA726</color>       <!-- Orange 400 -->
-    <color name="gelb">#ffff00</color>
-    <color name="rot">#ff0000</color>
+    <!-- ═══ 品牌色（学校标准色 #005397）═══ -->
+    <color name="brand">#005397</color>
+    <color name="brand_d">#00335e</color>   <!-- 深色，用于状态栏/按下态 -->
+    <color name="brand_l">#e8f1f8</color>   <!-- 浅色，用于选中背景/高亮 -->
 
+    <!-- Material 主题映射 -->
+    <color name="primary">@color/brand</color>
+    <color name="primary_dark">@color/brand_d</color>
+    <color name="accent">@color/brand</color>
+
+    <!-- ═══ 语义色 ═══ -->
+    <color name="ok">#16a34a</color>      <!-- 已连接 / 正常 -->
+    <color name="warn">#f59e0b</color>    <!-- 警告 / 连接中 -->
+    <color name="err">#dc2626</color>     <!-- 错误 / 断开 -->
+    <color name="gelb">#ffff00</color>    <!-- 兼容原版引用 -->
+    <color name="rot">#ff0000</color>     <!-- 兼容原版引用 -->
+
+    <!-- ═══ 中性色 ═══ -->
+    <color name="ink">#0f172a</color>     <!-- 主文字 -->
+    <color name="ink2">#475569</color>    <!-- 次要文字 -->
+    <color name="ink3">#94a3b8</color>    <!-- 提示文字/未激活 -->
+    <color name="line">#e2e8f0</color>    <!-- 分割线/边框 -->
+    <color name="bg">#f1f5f9</color>      <!-- 页面背景 -->
+    <color name="card">#ffffff</color>    <!-- 卡片背景 -->
+
+    <!-- ═══ 组件专用 ═══ -->
+    <color name="tab_text">#D9E8F3</color>       <!-- 未选中页签文字 -->
     <color name="switchbar">@android:color/darker_gray</color>
-
-
     <color name="background_tab_pressed">#1AFFFFFF</color>
-
-
-    <color name="dataIn">#ff0000</color>
-    <color name="dataOut">#0000ff</color>
     <color name="logobackground">#F2F2F2</color>
+
+    <!-- ═══ 流量图曲线 ═══ -->
+    <color name="dataIn">@color/brand</color>     <!-- 下载 = 品牌蓝 -->
+    <color name="dataOut">@color/ok</color>       <!-- 上传 = 绿 -->
 </resources>

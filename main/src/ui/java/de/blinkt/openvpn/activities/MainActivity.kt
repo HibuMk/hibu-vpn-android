@@ -43,6 +43,8 @@ class MainActivity : BaseActivity() {
         }
         if (!minimalUi) {
 
+            // 黑龙江工商学院：主连接页（PC 风格）作为首屏
+            mPagerAdapter.addTab(R.string.pc_tab_connect, ConnectFragment::class.java)
             mPagerAdapter.addTab(R.string.vpn_list_title, VPNProfileList::class.java)
             mPagerAdapter.addTab(R.string.graph, GraphFragment::class.java)
             mPagerAdapter.addTab(R.string.generalsettings, GeneralSettings::class.java)

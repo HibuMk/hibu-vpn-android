@@ -75,6 +75,14 @@ public class LaunchVPN extends Activity {
     public static final String EXTRA_NAME = "de.blinkt.openvpn.shortcutProfileName";
     public static final String EXTRA_HIDELOG = "de.blinkt.openvpn.showNoLogWindow";
 
+    /**
+     * 黑龙江工商学院：主连接页直接传入凭据，避免再弹凭据对话框。
+     * EXTRA_AUTH_USER —— 账号，会写入配置（非机密，下次自动带出）
+     * EXTRA_AUTH_PW   —— 密码，仅存在于内存（mTransientAuthPW），绝不落盘
+     */
+    public static final String EXTRA_AUTH_USER = "de.blinkt.openvpn.authUsername";
+    public static final String EXTRA_AUTH_PW = "de.blinkt.openvpn.transientAuthPW";
+
     public static final String CLEARLOG = "clearlogconnect";
 
 
@@ -160,6 +168,19 @@ public class LaunchVPN extends Activity {
         } else {
             mSelectedProfile = profileToConnect;
             mSelectedProfileReason = startReason;
+
+            // 黑龙江工商学院：接收主连接页传来的凭据
+            String extraUser = intent.getStringExtra(EXTRA_AUTH_USER);
+            String extraPw = intent.getStringExtra(EXTRA_AUTH_PW);
+            if (!TextUtils.isEmpty(extraUser)) {
+                mSelectedProfile.mUsername = extraUser;
+                // 只持久化用户名（密码始终保持为空，绝不明文落盘）
+                ProfileManager.saveProfile(this, mSelectedProfile);
+            }
+            if (!TextUtils.isEmpty(extraPw)) {
+                mTransientAuthPW = extraPw;
+            }
+
             launchVPN();
         }
 

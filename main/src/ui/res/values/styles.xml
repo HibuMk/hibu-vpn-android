@@ -3,28 +3,28 @@
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
 
+<!--
+   黑龙江工商学院 VPN 客户端 —— 主题与组件样式
+   设计规范与 PC 客户端（src/styles.css）一致：
+     顶栏品牌蓝 / 白底卡片 / 12sp 标签 + 13sp 输入 / 9dp 圆角按钮 / 页脚 10.5sp 灰字
+-->
 <resources>
 
+    <!-- ═══ 基础主题：品牌蓝 ActionBar ═══ -->
     <style name="blinkt.baseTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
         <item name="alertDialogTheme">@style/blinkt.alertDialog</item>
 
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@color/primary_dark</item>
+        <item name="android:windowLightStatusBar">false</item>
 
-        <item name="android:navigationBarColor">
-            @android:color/transparent
-        </item>
-
-        <!-- Optional: set to transparent if your app is drawing behind the status bar. -->
-        <item name="android:statusBarColor">
-            @android:color/transparent
-        </item>
-
-        <!-- Optional: set for a light status bar with dark content. -->
-        <item name="android:windowLightStatusBar">
-            true
-        </item>
+        <!-- 页面底色（与 PC 一致 #f1f5f9） -->
+        <item name="android:windowBackground">@color/bg</item>
+        <item name="android:textColorPrimary">@color/ink</item>
+        <item name="android:textColorSecondary">@color/ink2</item>
     </style>
 
     <style name="blinkt.dialog" parent="Theme.AppCompat.DayNight.Dialog">
@@ -43,7 +43,111 @@
 
     <style name="blinkt" parent="blinkt.baseTheme" />
 
+    <!-- ═══════════════════════════════════════════════
+         PC 风格组件（与桌面客户端逐像素对齐）
+         ═══════════════════════════════════════════════ -->
 
+    <!-- 卡片：白底 + 1dp 边框 + 10dp 圆角（PC 的 radius 8-9px） -->
+    <style name="pc.card">
+        <item name="android:background">@drawable/pc_card</item>
+        <item name="android:padding">18dp</item>
+        <item name="android:layout_marginBottom">12dp</item>
+    </style>
+
+    <!-- 表单行：标签 34dp 宽 + 输入框 -->
+    <style name="pc.fieldLabel">
+        <item name="android:layout_width">44dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/ink2</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <!-- 输入框 / 下拉框 -->
+    <style name="pc.input">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/pc_input</item>
+        <item name="android:paddingStart">11dp</item>
+        <item name="android:paddingEnd">11dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/ink</item>
+        <item name="android:textColorHint">@color/ink3</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <!-- 主按钮：品牌蓝 + 9dp 圆角 + 字距 -->
+    <style name="pc.button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">46dp</item>
+        <item name="android:background">@drawable/pc_button</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:letterSpacing">0.12</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <!-- 次要/断开按钮 -->
+    <style name="pc.button.disc">
+        <item name="android:background">@drawable/pc_button_disc</item>
+        <item name="android:textColor">@color/err</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
+    <!-- 页脚 -->
+    <style name="pc.footer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">9dp</item>
+        <item name="android:paddingBottom">11dp</item>
+        <item name="android:textSize">10.5sp</item>
+        <item name="android:textColor">@color/ink3</item>
+    </style>
+
+    <!-- 区块小标题 -->
+    <style name="pc.sectionTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/ink2</item>
+        <item name="android:letterSpacing">0.06</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
+    <!-- 信息行容器 -->
+    <style name="pc.infoRow">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+    </style>
+
+    <!-- 信息行：key 左 / value 右 -->
+    <style name="pc.infoKey">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">11.5sp</item>
+        <item name="android:textColor">@color/ink3</item>
+    </style>
+
+    <style name="pc.infoValue">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">11.5sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/ink</item>
+        <item name="android:fontFeatureSettings">tnum</item>
+    </style>
+
+
+    <!-- ═══ 原有样式（保持兼容）═══ -->
     <style name="item">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -62,7 +166,6 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
-        <!-- <item name="android:singleLine">true</item> -->
     </style>
 
     <style name="accountSetupButton">
@@ -86,7 +189,6 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-
     <style name="blinkt.translucent" parent="blinkt.dialog">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
@@ -94,26 +196,25 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <!-- ═══ 顶部页签：品牌蓝底 + 白字 ═══ -->
     <style name="blinkt.tabLayout" parent="Widget.Design.TabLayout">
-        <item name="tabIndicatorColor">?attr/colorAccent</item>
-        <item name="tabIndicatorHeight">4dp</item>
+        <item name="tabIndicatorColor">@android:color/white</item>
+        <item name="tabIndicatorHeight">3dp</item>
         <item name="android:background">@color/primary</item>
-
-
-        <item name="tabBackground">@color/primary</item>
+        <item name="tabBackground">@drawable/pc_tab_bg</item>
         <item name="tabTextAppearance">@style/AppTabTextAppearance</item>
         <item name="tabSelectedTextColor">@android:color/white</item>
-
+        <item name="tabTextColor">@color/tab_text</item>
         <item name="tabGravity">fill</item>
         <item name="tabMaxWidth">0dp</item>
-
+        <item name="android:elevation">0dp</item>
     </style>
 
     <style name="AppTabTextAppearance" parent="TextAppearance.Design.Tab">
-        <item name="textAllCaps">true</item>
+        <item name="textAllCaps">false</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/tab_text</item>
     </style>
-
 
 </resources>
