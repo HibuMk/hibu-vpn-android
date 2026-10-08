@@ -36,8 +36,8 @@ android {
         minSdk = 23
         targetSdk = 37
         //targetSdkPreview = "UpsideDownCake"
-        versionCode = 228
-        versionName = "1.0.1"
+        versionCode = 227
+        versionName = "1.0"
         externalNativeBuild {
             cmake {
                 //arguments+= "-DCMAKE_VERBOSE_MAKEFILE=1"
@@ -125,8 +125,7 @@ android {
 
         create("ovpn2") {
             dimension = "ovpnimpl"
-            // 上游此处有 versionNameSuffix = "-o2"（供应用商店区分双包）；
-            // 校内分发只有一个包，去掉后缀，让 App 内显示干净的 "1.0"
+            versionNameSuffix = "-o2"
             buildConfigField("boolean", "openvpn3", "false")
         }
     }
