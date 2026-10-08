@@ -44,12 +44,7 @@ class MainActivity : BaseActivity() {
         if (!minimalUi) {
 
             // 黑龙江工商学院：主连接页（PC 风格）作为首屏
-            // 【临时诊断开关】ovpn2 变体启用新连接页；ovpn23 变体回退旧界面，
-            // 用于二分定位「启动即闪退」问题（定位后移除本开关）
-            val useNewConnectPage = de.blinkt.openvpn.BuildConfig.FLAVOR.endsWith("Ovpn2")
-            if (useNewConnectPage) {
-                mPagerAdapter.addTab(R.string.pc_tab_connect, ConnectFragment::class.java)
-            }
+            mPagerAdapter.addTab(R.string.pc_tab_connect, ConnectFragment::class.java)
             mPagerAdapter.addTab(R.string.vpn_list_title, VPNProfileList::class.java)
             mPagerAdapter.addTab(R.string.graph, GraphFragment::class.java)
             mPagerAdapter.addTab(R.string.generalsettings, GeneralSettings::class.java)

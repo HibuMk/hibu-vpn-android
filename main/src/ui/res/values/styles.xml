@@ -54,8 +54,12 @@
          parent="" 表示不继承任何父样式。 -->
     <style name="pc" parent="" />
 
-    <!-- 卡片：白底 + 1dp 边框 + 10dp 圆角（PC 的 radius 8-9px） -->
+    <!-- 卡片：白底 + 1dp 边框 + 10dp 圆角（PC 的 radius 8-9px）
+         ⚠️ 必须带 layout_width/height：布局中卡片靠本样式提供宽高，
+            缺失会在 inflate 时抛 "You must supply a layout_width attribute" 直接闪退 -->
     <style name="pc.card">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/pc_card</item>
         <item name="android:padding">18dp</item>
         <item name="android:layout_marginBottom">12dp</item>
@@ -99,6 +103,8 @@
 
     <!-- 次要/断开按钮 -->
     <style name="pc.button.disc">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">46dp</item>
         <item name="android:background">@drawable/pc_button_disc</item>
         <item name="android:textColor">@color/err</item>
         <item name="android:letterSpacing">0.02</item>

@@ -2,6 +2,10 @@
    黑龙江工商学院 VPN 客户端 —— 主连接页
    布局与 PC 客户端（index.html）逐项对齐：
      状态圆环 → 节点/账号/密码三栏 → 记住复选框 → 连接按钮 → 连接信息 → 页脚
+
+   ⚠️ 铁律：每个控件的 layout_width / layout_height 必须【显式写在本文件】，
+      不要依赖 style 提供 —— style 缺了会在 inflate 时抛
+      "You must supply a layout_width attribute" 直接闪退。
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -22,6 +26,8 @@
         <!-- ═══ 状态圆环卡片 ═══ -->
         <LinearLayout
             style="@style/pc.card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center_horizontal"
             android:paddingTop="20dp"
@@ -66,9 +72,15 @@
         <!-- ═══ 表单卡片 ═══ -->
         <LinearLayout
             style="@style/pc.card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView style="@style/pc.sectionTitle" android:text="@string/pc_section_account" />
+            <TextView
+                style="@style/pc.sectionTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pc_section_account" />
 
             <!-- 节点 -->
             <LinearLayout
@@ -76,7 +88,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginBottom="9dp">
-                <TextView style="@style/pc.fieldLabel" android:text="@string/pc_field_node" />
+
+                <TextView
+                    style="@style/pc.fieldLabel"
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pc_field_node" />
+
                 <Spinner
                     android:id="@+id/node_spinner"
                     android:layout_width="0dp"
@@ -96,13 +114,21 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginBottom="9dp">
-                <TextView style="@style/pc.fieldLabel" android:text="@string/pc_field_user" />
+
+                <TextView
+                    style="@style/pc.fieldLabel"
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pc_field_user" />
+
                 <EditText
                     android:id="@+id/user_input"
                     style="@style/pc.input"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
                     android:hint="@string/pc_hint_user"
                     android:inputType="text"
-                    android:autofillHints="username"
                     android:importantForAutofill="no" />
             </LinearLayout>
 
@@ -112,13 +138,21 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginBottom="4dp">
-                <TextView style="@style/pc.fieldLabel" android:text="@string/pc_field_pass" />
+
+                <TextView
+                    style="@style/pc.fieldLabel"
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pc_field_pass" />
+
                 <EditText
                     android:id="@+id/pass_input"
                     style="@style/pc.input"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
                     android:hint="@string/pc_hint_pass"
                     android:inputType="textPassword"
-                    android:autofillHints="password"
                     android:importantForAutofill="no" />
             </LinearLayout>
 
@@ -154,15 +188,24 @@
             <Button
                 android:id="@+id/action_btn"
                 style="@style/pc.button"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
                 android:text="@string/pc_btn_connect" />
         </LinearLayout>
 
         <!-- ═══ 连接信息卡片 ═══ -->
         <LinearLayout
             style="@style/pc.card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView style="@style/pc.sectionTitle" android:text="@string/pc_section_info" />
+            <TextView
+                style="@style/pc.sectionTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pc_section_info" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -170,30 +213,84 @@
                 android:layout_marginBottom="4dp"
                 android:background="@color/line" />
 
-            <LinearLayout style="@style/pc.infoRow">
-                <TextView style="@style/pc.infoKey" android:text="@string/pc_info_state" />
-                <TextView android:id="@+id/info_state" style="@style/pc.infoValue" android:text="—" />
+            <LinearLayout
+                style="@style/pc.infoRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/pc.infoKey"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/pc_info_state" />
+                <TextView
+                    android:id="@+id/info_state"
+                    style="@style/pc.infoValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="—" />
             </LinearLayout>
 
-            <LinearLayout style="@style/pc.infoRow">
-                <TextView style="@style/pc.infoKey" android:text="@string/pc_info_node" />
-                <TextView android:id="@+id/info_node" style="@style/pc.infoValue" android:text="—" />
+            <LinearLayout
+                style="@style/pc.infoRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/pc.infoKey"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/pc_info_node" />
+                <TextView
+                    android:id="@+id/info_node"
+                    style="@style/pc.infoValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="—" />
             </LinearLayout>
 
-            <LinearLayout style="@style/pc.infoRow">
-                <TextView style="@style/pc.infoKey" android:text="@string/pc_info_duration" />
-                <TextView android:id="@+id/info_duration" style="@style/pc.infoValue" android:text="—" />
+            <LinearLayout
+                style="@style/pc.infoRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/pc.infoKey"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/pc_info_duration" />
+                <TextView
+                    android:id="@+id/info_duration"
+                    style="@style/pc.infoValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="—" />
             </LinearLayout>
 
-            <LinearLayout style="@style/pc.infoRow">
-                <TextView style="@style/pc.infoKey" android:text="@string/pc_info_traffic" />
-                <TextView android:id="@+id/info_traffic" style="@style/pc.infoValue" android:text="—" />
+            <LinearLayout
+                style="@style/pc.infoRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/pc.infoKey"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/pc_info_traffic" />
+                <TextView
+                    android:id="@+id/info_traffic"
+                    style="@style/pc.infoValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="—" />
             </LinearLayout>
         </LinearLayout>
 
         <!-- ═══ 页脚 ═══ -->
         <TextView
             style="@style/pc.footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/pc_footer" />
     </LinearLayout>
 </ScrollView>
