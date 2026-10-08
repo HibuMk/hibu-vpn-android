@@ -286,11 +286,32 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- ═══ 页脚 ═══ -->
-        <TextView
-            style="@style/pc.footer"
+        <!-- ═══ 页脚：信息中心 + 关于（点「关于」看软件信息/日志）═══ -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/pc_footer" />
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingTop="9dp"
+            android:paddingBottom="11dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10.5sp"
+                android:textColor="@color/ink3"
+                android:text="@string/pc_footer" />
+
+            <TextView
+                android:id="@+id/about_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:textSize="10.5sp"
+                android:textColor="@color/brand"
+                android:text="@string/pc_about_link" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

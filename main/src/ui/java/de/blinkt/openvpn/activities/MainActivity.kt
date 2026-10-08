@@ -11,8 +11,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import de.blinkt.openvpn.R
 import de.blinkt.openvpn.core.GlobalPreferences
 import de.blinkt.openvpn.fragments.*
@@ -30,39 +28,17 @@ class MainActivity : BaseActivity() {
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = view.findViewById(R.id.pager)
-        val tablayout: TabLayout = view.findViewById(R.id.tab_layout)
 
         mPagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager, lifecycle, this)
 
         /* Toolbar and slider should have the same elevation */
         disableToolbarElevation()
 
-        val minimalUi = GlobalPreferences.getMinimalUi();
-        if (isAndroidTV || minimalUi) {
-            mPagerAdapter.addTab(R.string.minimal_ui, MinimalUI::class.java)
-        }
-        if (!minimalUi) {
-
-            // 黑龙江工商学院：主连接页（PC 风格）作为首屏
-            mPagerAdapter.addTab(R.string.pc_tab_connect, ConnectFragment::class.java)
-            mPagerAdapter.addTab(R.string.vpn_list_title, VPNProfileList::class.java)
-            mPagerAdapter.addTab(R.string.graph, GraphFragment::class.java)
-            mPagerAdapter.addTab(R.string.generalsettings, GeneralSettings::class.java)
-            mPagerAdapter.addTab(R.string.faq, FaqFragment::class.java)
-            if (SendDumpFragment.getLatestDump(this) != null) {
-                mPagerAdapter.addTab(R.string.crashdump, SendDumpFragment::class.java)
-            }
-
-        }
-        if (isAndroidTV || minimalUi)
-            mPagerAdapter.addTab(R.string.openvpn_log, LogFragment::class.java)
-
-        mPagerAdapter.addTab(R.string.about, AboutFragment::class.java)
+        // 黑龙江工商学院：按需求取消顶部导航栏（配置/图表/设置/常见问题/关于），
+        // 只保留主连接页 —— 与桌面版保持一致。日志开关、软件信息移到页脚「关于」。
+        mPagerAdapter.addTab(R.string.pc_tab_connect, ConnectFragment::class.java)
         mPager.setAdapter(mPagerAdapter)
-
-        TabLayoutMediator(tablayout, mPager) { tab, position ->
-            tab.text = mPagerAdapter.getPageTitle(position)
-        }.attach()
+        mPager.isUserInputEnabled = false
 
         setUpEdgeEdgeInsetsListener(view, R.id.root_linear_layout)
         setContentView(view)
@@ -83,7 +59,8 @@ class MainActivity : BaseActivity() {
                 uri?.let { checkUriForProfileImport(it) }
             }
             val page = intent.getStringExtra("PAGE")
-            if ("graph" == page) {
+            // 只剩一个页面，跳转需防越界
+            if ("graph" == page && mPagerAdapter.itemCount > 1) {
                 mPager.currentItem = 1
             }
             setIntent(null)

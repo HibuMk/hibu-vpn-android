@@ -14,20 +14,11 @@
             android:orientation="vertical">
 
 
-        <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layout"
-                style="@style/blinkt.tabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                app:tabMaxWidth="0dp"
-                app:tabMode="scrollable" />
-
+        <!-- 黑龙江工商学院：按需求取消顶部导航栏，只保留主连接页（与桌面版一致） -->
         <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3" />
+                android:layout_height="match_parent" />
 
     </LinearLayout>
 

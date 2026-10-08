@@ -50,6 +50,11 @@ public class ICSOpenVPNApplication extends Application {
 
         AppRestrictions.getInstance(this).checkRestrictions(this);
 
+        // 黑龙江工商学院：点击连接后不要自动跳到日志页
+        // （上游默认 showlogwindow=true，连接成功会弹日志窗口）
+        Preferences.getDefaultSharedPreferences(this).edit()
+                .putBoolean("showlogwindow", false).apply();
+
         // 黑龙江工商学院：崩溃诊断（崩了会把原因显示出来，便于快速定位）
         HibuCrashHandler.install(this);
 

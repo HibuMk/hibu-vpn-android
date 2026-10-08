@@ -106,6 +106,9 @@ class ConnectFragment : Fragment(), VpnStatus.StateListener, VpnStatus.ByteCount
 
         actionBtn.setOnClickListener { onActionPressed() }
 
+        // 关于：软件信息 + 运行日志（导航栏取消后，日志入口挪到这里）
+        v.findViewById<TextView>(R.id.about_link).setOnClickListener { showAbout() }
+
         // 首次进入自动连接
         if (autoConnect.isChecked && mLevel == ConnectionStatus.LEVEL_NOTCONNECTED) {
             autoConnectIfPossible()
@@ -213,6 +216,8 @@ class ConnectFragment : Fragment(), VpnStatus.StateListener, VpnStatus.ByteCount
         intent.putExtra(LaunchVPN.EXTRA_AUTH_USER, user)
         intent.putExtra(LaunchVPN.EXTRA_AUTH_PW, pass)
         intent.putExtra(OpenVPNService.EXTRA_START_REASON, getString(R.string.pc_start_reason))
+        // 点击连接后不要跳到日志页（intent 级锁死，配合 showlogwindow=false 双保险）
+        intent.putExtra(LaunchVPN.EXTRA_HIDELOG, true)
         intent.action = Intent.ACTION_MAIN
         startActivity(intent)
 
@@ -227,6 +232,52 @@ class ConnectFragment : Fragment(), VpnStatus.StateListener, VpnStatus.ByteCount
         } catch (e: RemoteException) {
             VpnStatus.logException(e)
         }
+    }
+
+    /** 关于弹窗：软件信息 + 一键查看运行日志 */
+    private fun showAbout() {
+        val body = StringBuilder()
+        body.append(getString(R.string.pc_about_body))
+        body.append("\n\n")
+        body.append(getString(R.string.pc_about_version)).append("：")
+        body.append(
+            try {
+                requireContext().packageManager
+                    .getPackageInfo(requireContext().packageName, 0).versionName ?: "—"
+            } catch (e: Exception) {
+                "—"
+            }
+        )
+
+        androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle(R.string.pc_about_title)
+            .setMessage(body.toString())
+            .setPositiveButton(R.string.pc_about_log) { _, _ -> showLog() }
+            .setNegativeButton(R.string.pc_about_close, null)
+            .show()
+    }
+
+    /** 运行日志（原来在导航栏的「图表」页，现在从「关于」进入） */
+    private fun showLog() {
+        val log = try {
+            VpnStatus.getLastCleanLogMessage(requireContext(), true) ?: ""
+        } catch (e: Exception) {
+            ""
+        }
+        val sv = android.widget.ScrollView(requireContext())
+        val tv = TextView(requireContext())
+        tv.text = log.ifBlank { getString(R.string.pc_about_close) }
+        tv.textSize = 10f
+        tv.setTextIsSelectable(true)
+        val pad = (12 * resources.displayMetrics.density).toInt()
+        tv.setPadding(pad, pad, pad, pad)
+        sv.addView(tv)
+
+        androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle(R.string.pc_log_title)
+            .setView(sv)
+            .setPositiveButton(R.string.pc_about_close, null)
+            .show()
     }
 
     private fun toast(msg: String) {
