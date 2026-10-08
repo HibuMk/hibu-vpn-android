@@ -34,7 +34,8 @@
     <color name="card">#ffffff</color>    <!-- 卡片背景 -->
 
     <!-- ═══ 组件专用 ═══ -->
-    <color name="tab_text">#D9E8F3</color>       <!-- 未选中页签文字 -->
+    <!-- 注意：tab_text 已由 main/res/color/tab_text.xml 以「颜色状态列表」形式提供，
+         此处不可再定义，否则报 Duplicate resources -->
     <color name="switchbar">@color/brand</color>
     <color name="background_tab_pressed">#1AFFFFFF</color>
     <color name="logobackground">#F2F2F2</color>
