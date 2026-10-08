@@ -376,7 +376,13 @@ class ConnectFragment : Fragment(), VpnStatus.StateListener, VpnStatus.ByteCount
         }
         statusText.text = title
         statusText.setTextColor(requireContext().getColor(color))
-        statusMsg.text = if (!msg.isNullOrBlank()) msg else getString(R.string.pc_status_hint)
+        // 圆环下的小字：若引擎日志与标题重复（如都显示"已连接"），改显示提示语避免重复
+        val rawMsg = msg?.trim().orEmpty()
+        statusMsg.text = if (rawMsg.isNotEmpty() && !rawMsg.equals(title, ignoreCase = true)) {
+            rawMsg
+        } else {
+            getString(R.string.pc_status_hint)
+        }
 
         actionBtn.text = when {
             connected -> getString(R.string.pc_btn_disconnect)

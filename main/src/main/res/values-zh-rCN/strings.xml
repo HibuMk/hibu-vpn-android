@@ -36,5 +36,6 @@
     <string name="pc_log_title">运行日志</string>
     <string name="pc_brand_title">黑龙江工商学院</string>
     <string name="pc_brand_sub">虚拟专用网客户端</string>
+    <string name="pc_brand_line">黑工商虚拟专用网客户端</string>
     <string name="pc_about_body">黑龙江工商学院 VPN 客户端\n\n访问校内资源的安全通道，支持 Windows / macOS / Linux / Android / 鸿蒙。\n\n本应用基于开源项目 ics-openvpn（GPLv2）二次开发，按 GPLv2 要求开放源代码：\nhttps://github.com/HibuMk/hibu-vpn-android\n\n技术支持：黑龙江工商学院信息中心（网信办）</string>
 </resources>

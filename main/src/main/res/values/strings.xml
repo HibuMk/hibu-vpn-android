@@ -552,5 +552,6 @@
     <string name="pc_log_title">Log</string>
     <string name="pc_brand_title">Heilongjiang University of Business and Technology</string>
     <string name="pc_brand_sub">VPN Client</string>
+    <string name="pc_brand_line">HUBT VPN Client</string>
     <string name="pc_about_body">HUBT VPN Client\n\nSecure access to campus resources. Available for Windows / macOS / Linux / Android / HarmonyOS.\n\nThis app is based on the open-source project ics-openvpn (GPLv2) and its source code is available at:\nhttps://github.com/HibuMk/hibu-vpn-android\n\nTechnical support: Information Center, HUBT</string>
 </resources>
