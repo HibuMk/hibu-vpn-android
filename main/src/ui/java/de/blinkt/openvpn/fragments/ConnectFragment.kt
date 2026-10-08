@@ -114,7 +114,33 @@ class ConnectFragment : Fragment(), VpnStatus.StateListener, VpnStatus.ByteCount
             autoConnectIfPossible()
         }
 
+        // ★ 强制一屏显示：内容高于屏幕可用高度时整体等比缩放，任何屏幕都不用滑动
+        val root = v.findViewById<View>(R.id.connect_root)
+        root.post { autoFitToScreen(root) }
+        root.viewTreeObserver.addOnGlobalLayoutListener { autoFitToScreen(root) }
+
         return v
+    }
+
+    /**
+     * 强制一页显示（不可滑动）
+     * 控件总高 > 屏幕可视高度时，把整块内容等比缩放（scaleX == scaleY，不变形），
+     * 缩放后内容完整可见且无滚动容器 → 无论如何都滑不动。
+     * 屏幕够大时自动恢复 1.0（不放大，避免糊）。
+     */
+    private fun autoFitToScreen(root: View) {
+        val host = root.parent as? View ?: return
+        val avail = host.height
+        val need = root.measuredHeight          // measuredHeight 不受 scale 影响，就是自然高度
+        if (avail <= 0 || need <= 0) return
+
+        val s = if (need > avail) avail.toFloat() / need else 1f
+        if (Math.abs(root.scaleY - s) < 0.004f) return   // 已适配，避免无限重排
+
+        root.pivotX = root.width / 2f
+        root.pivotY = 0f                                  // 从顶部开始缩，保持顶对齐
+        root.scaleX = s
+        root.scaleY = s
     }
 
     /** 找到内置线路（安装时自动导入的那一条） */

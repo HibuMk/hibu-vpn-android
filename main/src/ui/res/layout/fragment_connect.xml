@@ -1,36 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-   黑龙江工商学院 VPN 客户端 —— 主连接页
-   布局与 PC 客户端（index.html）逐项对齐：
-     状态圆环 → 节点/账号/密码三栏 → 记住复选框 → 连接按钮 → 连接信息 → 页脚
+   黑龙江工商学院 VPN 客户端 —— 主连接页（强制单屏版）
+
+   ⚠️ 强制一页显示、不可滑动：
+     ① 去掉 ScrollView —— 没有滚动容器就不可能滑动
+     ② 根用 FrameLayout，内容 LinearLayout 高度 wrap_content
+     ③ 尺寸全部紧凑化（圆环 108dp / 字段 44dp / 内边距收窄）
+     ④ ConnectFragment 里做「自适应缩放」兜底：
+        若内容高于屏幕可用高度 → 按比例整体 scaleY/scaleX 缩放，保证一屏装下
 
    ⚠️ 铁律：每个控件的 layout_width / layout_height 必须【显式写在本文件】，
       不要依赖 style 提供 —— style 缺了会在 inflate 时抛
       "You must supply a layout_width attribute" 直接闪退。
 -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg"
-    android:fillViewport="true"
-    android:scrollbars="none">
+    android:clipChildren="false">
 
     <LinearLayout
+        android:id="@+id/connect_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="top"
         android:orientation="vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="16dp"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:paddingTop="10dp"
         android:paddingBottom="8dp">
 
-        <!-- ═══ 学校标识：校徽在左 + 校名在右（横向靠左，节省纵向空间）═══ -->
+        <!-- ═══ 学校标识：校徽在左 + 校名在右（横向靠左）═══ -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:paddingTop="14dp"
-            android:paddingBottom="12dp">
+            android:paddingTop="10dp"
+            android:paddingBottom="8dp">
 
             <ImageView
                 android:layout_width="38dp"
@@ -58,13 +64,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp">
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
 
             <FrameLayout
                 android:id="@+id/ring"
-                android:layout_width="126dp"
-                android:layout_height="126dp"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
                 android:background="@drawable/pc_ring"
                 android:backgroundTint="@color/ink3">
 
@@ -85,11 +91,11 @@
 
                     <TextView
                         android:id="@+id/status_msg"
-                        android:layout_width="108dp"
+                        android:layout_width="94dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
+                        android:layout_marginTop="2dp"
                         android:gravity="center"
-                        android:lineSpacingExtra="2dp"
+                        android:lineSpacingExtra="1dp"
                         android:textSize="10.5sp"
                         android:textColor="@color/ink3"
                         android:text="@string/pc_status_hint" />
@@ -102,7 +108,9 @@
             style="@style/pc.card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
 
             <TextView
                 style="@style/pc.sectionTitle"
@@ -115,7 +123,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="9dp">
+                android:layout_marginBottom="7dp">
 
                 <TextView
                     style="@style/pc.fieldLabel"
@@ -141,7 +149,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="9dp">
+                android:layout_marginBottom="7dp">
 
                 <TextView
                     style="@style/pc.fieldLabel"
@@ -165,7 +173,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="4dp">
+                android:layout_marginBottom="2dp">
 
                 <TextView
                     style="@style/pc.fieldLabel"
@@ -189,8 +197,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="14dp">
+                android:layout_marginTop="9dp"
+                android:layout_marginBottom="10dp">
 
                 <CheckBox
                     android:id="@+id/remember_user"
@@ -217,7 +225,7 @@
                 android:id="@+id/action_btn"
                 style="@style/pc.button"
                 android:layout_width="match_parent"
-                android:layout_height="46dp"
+                android:layout_height="44dp"
                 android:text="@string/pc_btn_connect" />
         </LinearLayout>
 
@@ -226,7 +234,9 @@
             style="@style/pc.card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
 
             <TextView
                 style="@style/pc.sectionTitle"
@@ -237,8 +247,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="4dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="3dp"
                 android:background="@color/line" />
 
             <LinearLayout
@@ -314,14 +324,14 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- ═══ 页脚：信息中心 + 关于（点「关于」看软件信息/日志）═══ -->
+        <!-- ═══ 页脚：信息中心 + 软件信息 ═══ -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:paddingTop="9dp"
-            android:paddingBottom="20dp">
+            android:paddingTop="8dp"
+            android:paddingBottom="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -342,4 +352,4 @@
                 android:text="@string/pc_about_link" />
         </LinearLayout>
     </LinearLayout>
-</ScrollView>
+</FrameLayout>
