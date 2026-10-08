@@ -131,7 +131,7 @@ class ConnectFragment : Fragment(), VpnStatus.StateListener, VpnStatus.ByteCount
         setFormLocked(
             mLevel == ConnectionStatus.LEVEL_CONNECTED ||
             mLevel == ConnectionStatus.LEVEL_START ||
-            mLevel == ConnectionStatus.LEVEL_CONNECTING_SERVER_REPLY_YET ||
+            mLevel == ConnectionStatus.LEVEL_CONNECTING_NO_SERVER_REPLY_YET ||
             mLevel == ConnectionStatus.LEVEL_CONNECTING_SERVER_REPLIED
         )
 
