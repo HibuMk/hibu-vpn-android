@@ -125,7 +125,8 @@ android {
 
         create("ovpn2") {
             dimension = "ovpnimpl"
-            versionNameSuffix = "-o2"
+            // 上游此处有 versionNameSuffix = "-o2"（供应用商店区分双包）；
+            // 校内分发只有一个包，去掉后缀，让 App 内显示干净的 "1.0"
             buildConfigField("boolean", "openvpn3", "false")
         }
     }
